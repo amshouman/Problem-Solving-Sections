@@ -1,0 +1,7 @@
+title: Problem Solving & Programming
+description: Interactive C programming sections
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: none
+permalink: /:name.html
