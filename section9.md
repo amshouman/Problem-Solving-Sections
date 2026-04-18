@@ -1,7 +1,7 @@
 ---
 layout: default
 section_num: "09"
-title: Pointer Practice
+title: Pointers Practice
 desc: Practice problems on arrays, pointers, and using pointers in functions.
 tags: [pointers, arrays, functions]
 ---
