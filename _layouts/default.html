@@ -217,6 +217,82 @@
       font-feature-settings: "liga" 0, "calt" 0;
     }
 
+    /* Visual memory diagrams */
+    .pointer-diagram {
+      display: grid;
+      grid-template-columns: minmax(150px, 1fr) minmax(130px, 0.7fr) minmax(150px, 1fr);
+      align-items: center;
+      gap: 14px;
+      margin: 18px 0;
+      padding: 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .memory-cell { text-align: center; }
+    .memory-address {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .memory-box {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-code);
+      border: 1px solid var(--border-h);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .memory-name {
+      margin-top: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .pointer-arrow {
+      position: relative;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .pointer-arrow::before {
+      content: '';
+      position: absolute;
+      top: 24px;
+      left: 18px;
+      right: 8px;
+      border-top: 2px solid var(--accent);
+    }
+    .pointer-arrow::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 8px;
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right: 10px solid var(--accent);
+    }
+    .pointer-arrow span {
+      position: relative;
+      z-index: 1;
+      margin-top: 28px;
+      padding: 2px 6px;
+      background: var(--bg-card);
+    }
+
     /* Tables */
     table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
     th, td { padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
@@ -280,6 +356,28 @@
       h2 { font-size: 1.2rem; }
       .code-block pre { padding: 14px; }
       .nav-title { display: none; }
+      .pointer-diagram {
+        grid-template-columns: 1fr;
+      }
+      .pointer-arrow {
+        min-height: 50px;
+      }
+      .pointer-arrow::before {
+        top: 6px;
+        bottom: 6px;
+        left: 50%;
+        right: auto;
+        border-top: 0;
+        border-left: 2px solid var(--accent);
+      }
+      .pointer-arrow::after {
+        top: 4px;
+        left: calc(50% - 6px);
+      }
+      .pointer-arrow span {
+        margin-top: 0;
+        margin-left: 18px;
+      }
     }
   </style>
 </head>

@@ -1,48 +1,79 @@
 ---
 layout: default
 section_num: "03"
-title: "Practice: Conditionals & Arrays"
-desc: Hands-on exercises — searching, summing, reversing, and checking palindromes in arrays.
-tags: [search, max, palindrome]
+title: Arrays
+desc: One-dimensional arrays, traversal, searching, summing, reversing, and filtering.
+tags: [arrays, 1D arrays, search, max, palindrome]
 ---
 
-# 📘 Section 3 — Practice: Conditionals & 1D Arrays
+# 📘 Section 3 — Arrays
 
- > Put your skills to the test with exercises covering conditional logic and one-dimensional arrays.
+ > Store many values under one name, then process them with loops.
 
 ---
 
 ## 🎯 What You'll Practice
 
-- Using `if-else` for decision-making
-- Declaring and traversing arrays
-- Searching, summing, and filtering array elements
-- Checking patterns in arrays (palindrome)
+- Declaring and initializing arrays
+- Accessing array elements using indexes
+- Traversing arrays with loops
+- Searching, summing, reversing, and filtering array elements
 
 ---
+
+## 1. Arrays
+
+An array is a data structure consisting of a collection of elements, each identified by an array index.
+
+![Array concept](assets/section3/array-concept.png)
+
+### Why Arrays?
+
+Without arrays, storing 1000 values requires 1000 separate variables:
+
+```c
+int number1;
+int number2;
+// ... now assume we need 1000 variables!
+```
+
+### Declaring and Initializing
+
+```c
+int array[] = {25, 50, 75, 100};     // Declare with values
+int array2[4];                        // Declare with size only
+array2[0] = 25;                       // Set value by index
+```
+
+### Indexing
+
+Arrays in C are **zero-indexed** — the first element is at position `0`:
+
+```
+Index:   [0]   [1]   [2]   [3]
+Value:    25    50    75   100
+```
 
 ## 🧪 Exercises
 
 ---
 
-### Exercise 1: Cartesian Plane Quadrant
+### Exercise 1: Array Operations
 
-**Task:** Accept the x-y coordinates of a point in the Cartesian plane and print a message telling either an axis on which the point lies or the quadrant in which it is found.
+**Task:** Initiate an array with the following integer values: `{-5, 3, 0, 1, 27}` then run the following operations on the array and print out the final output:
 
-**Sample outputs:**
-
-```
-(-1.0, -2.5) is in quadrant III
-(0, 4.8) is on the y-axis
-```
+1. Add 7 to the fourth element
+2. Multiply the first element by the third element → store in the fifth element
+3. Subtract 2 from the second element
+4. Multiply the first element by -1
+5. Set the value of the third element to the same value of the first element
+6. Add 9 to the fifth element
 
 <details markdown="1">
 <summary>💡 Hint</summary>
 
-- If both x and y are 0 → origin
-- If x is 0 → y-axis
-- If y is 0 → x-axis
-- Otherwise, check signs to determine the quadrant (I through IV)
+- Remember: arrays are zero-indexed! The "4th element" is `arr[3]`
+- Perform operations **in order** — each step uses results from previous steps
 
 </details>
 
@@ -53,33 +84,39 @@ tags: [search, max, palindrome]
 #include <stdio.h>
 
 int main() {
-    double x, y;
-    printf("Enter the x coordinate: ");
-    scanf("%lf", &x);
-    printf("Enter the y coordinate: ");
-    scanf("%lf", &y);
+    int arr[] = {-5, 3, 0, 1, 27};
 
-    if (x == 0 && y == 0) {
-        printf("(0,0) is at the origin");
-    } else if (x == 0) {
-        printf("(0,%.1f) is on the y-axis", y);
-    } else if (y == 0) {
-        printf("(%.1f,0) is on the x-axis", x);
-    } else if (x > 0 && y > 0) {
-        printf("(%.1f,%.1f) is in quadrant I", x, y);
-    } else if (x < 0 && y > 0) {
-        printf("(%.1f,%.1f) is in quadrant II", x, y);
-    } else if (x < 0 && y < 0) {
-        printf("(%.1f,%.1f) is in quadrant III", x, y);
-    } else if (x > 0 && y < 0) {
-        printf("(%.1f,%.1f) is in quadrant IV", x, y);
+    arr[3] += 7;              // 1 → 8
+    arr[4] = arr[0] * arr[2]; // -5 * 0 = 0
+    arr[1] -= 2;              // 3 → 1
+    arr[0] *= -1;             // -5 → 5
+    arr[2] = arr[0];          // 0 → 5
+    arr[4] += 9;              // 0 → 9
+
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", arr[i]);
     }
-
     return 0;
 }
 ```
 
-> 💡 **Key idea:** Check the special cases (origin, axes) **before** checking quadrants. Use `%lf` in `scanf` for `double`.
+**Output:**
+
+```
+5 1 5 8 9
+```
+
+**Step-by-step trace:**
+
+| Step | arr[0] | arr[1] | arr[2] | arr[3] | arr[4] |
+|------|--------|--------|--------|--------|--------|
+| Start | -5 | 3 | 0 | 1 | 27 |
+| 1 | -5 | 3 | 0 | **8** | 27 |
+| 2 | -5 | 3 | 0 | 8 | **0** |
+| 3 | -5 | **1** | 0 | 8 | 0 |
+| 4 | **5** | 1 | 0 | 8 | 0 |
+| 5 | 5 | 1 | **5** | 8 | 0 |
+| 6 | 5 | 1 | 5 | 8 | **9** |
 
 </details>
 

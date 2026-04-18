@@ -1,14 +1,14 @@
 ---
 layout: default
 section_num: "02"
-title: Loops & Arrays
-desc: While, for, and do-while loops. Declaring, initializing, and traversing one-dimensional arrays.
-tags: [for, while, arrays]
+title: Loops
+desc: While, for, and do-while loops, with practice on tracing and repetition.
+tags: [for, while, do-while]
 ---
 
-# 📘 Section 2 — Loops & Arrays
+# 📘 Section 2 — Loops
 
- > Learn how to repeat actions with loops and store collections of data using arrays.
+ > Learn how to repeat actions with `while`, `for`, and `do-while` loops.
 
 ---
 
@@ -16,12 +16,16 @@ tags: [for, while, arrays]
 
 - Why loops are essential in programming
 - Three types of loops: `while`, `for`, `do-while`
-- How to declare, initialize, and access arrays
-- Combining loops with arrays
+- How to trace loops step by step
+- How to use loops with conditions and counters
 
 ---
 
 ## 1. Why Loops?
+
+A loop is a sequence of instructions that keeps repeating until a certain condition is reached.
+
+![Loop concept](assets/section2/loop-concept.png)
 
 Imagine you need to print numbers from 1 to 1000. Without loops:
 
@@ -73,41 +77,6 @@ do {
 ```
 
 The condition is checked **after** each iteration, so the body runs **at least once**.
-
----
-
-## 5. Arrays
-
-An array is a data structure consisting of a collection of elements, each identified by an array index.
-
-### Why Arrays?
-
-Without arrays, storing 1000 values requires 1000 separate variables:
-
-```c
-int number1;
-int number2;
-// ... now assume we need 1000 variables!
-```
-
-### Declaring and Initializing
-
-```c
-int array[] = {25, 50, 75, 100};     // Declare with values
-int array2[4];                        // Declare with size only
-array2[0] = 25;                       // Set value by index
-```
-
-### Indexing
-
-Arrays in C are **zero-indexed** — the first element is at position `0`:
-
-```
-Index:   [0]   [1]   [2]   [3]
-Value:    25    50    75   100
-```
-
----
 
 ## 🧪 Exercises
 
@@ -173,7 +142,7 @@ for (int k = 7; k <= 16; k++)
         case 9: printf("DONE ");    break;
         case 5: printf("WELL");     break;
         case 6: printf(".");        break;
-        case 7: printf("WHAT ");    break;
+        case 7: ("WHAT ");          break;
         default: printf("Bad number. ");
     }
 printf("\n");
@@ -186,7 +155,7 @@ Let's trace each value of `k`:
 
 | k | k % 10 | Output |
 |---|--------|--------|
-| 7 | 7 | `WHAT ` |
+| 7 | 7 | nothing |
 | 8 | 8 | `IS ` |
 | 9 | 9 | `DONE ` |
 | 10 | 0 | `, ` |
@@ -200,10 +169,10 @@ Let's trace each value of `k`:
 **Final output:**
 
 ```
-WHAT IS DONE , OFTEN IS NOT DONE WELL.
+IS DONE , OFTEN IS NOT DONE WELL.
 ```
 
-> 💡 Notice: cases 2 & 8 share the same code (fall-through), and cases 4 & 9 also share code.
+> 💡 Notice: `case 7` has `("WHAT ");` but no `printf`, so it does not print anything. Cases 2 & 8 share the same code, and cases 4 & 9 also share code.
 
 </details>
 
@@ -247,71 +216,6 @@ int main() {
 > Notice that `45` and `90` are missing — they're divisible by both 5 and 9.
 
 </details>
-
----
-
-### Exercise 4: Array Operations
-
-**Task:** Initiate an array with the following integer values: `{-5, 3, 0, 1, 27}` then run the following operations on the array and print out the final output:
-
-1. Add 7 to the fourth element
-2. Multiply the first element by the third element → store in the fifth element
-3. Subtract 2 from the second element
-4. Multiply the first element by -1
-5. Set the value of the third element to the same value of the first element
-6. Add 9 to the fifth element
-
-<details markdown="1">
-<summary>💡 Hint</summary>
-
-- Remember: arrays are zero-indexed! The "4th element" is `arr[3]`
-- Perform operations **in order** — each step uses results from previous steps
-
-</details>
-
-<details markdown="1">
-<summary>🟢 Click to Show Solution</summary>
-
-```c
-#include <stdio.h>
-
-int main() {
-    int arr[] = {-5, 3, 0, 1, 27};
-
-    arr[3] += 7;              // 1 → 8
-    arr[4] = arr[0] * arr[2]; // -5 * 0 = 0
-    arr[1] -= 2;              // 3 → 1
-    arr[0] *= -1;             // -5 → 5
-    arr[2] = arr[0];          // 0 → 5
-    arr[4] += 9;              // 0 → 9
-
-    for (int i = 0; i < 5; i++) {
-        printf("%d ", arr[i]);
-    }
-    return 0;
-}
-```
-
-**Output:**
-
-```
-5 1 5 8 9
-```
-
-**Step-by-step trace:**
-
-| Step | arr[0] | arr[1] | arr[2] | arr[3] | arr[4] |
-|------|--------|--------|--------|--------|--------|
-| Start | -5 | 3 | 0 | 1 | 27 |
-| 1 | -5 | 3 | 0 | **8** | 27 |
-| 2 | -5 | 3 | 0 | 8 | **0** |
-| 3 | -5 | **1** | 0 | 8 | 0 |
-| 4 | **5** | 1 | 0 | 8 | 0 |
-| 5 | 5 | 1 | **5** | 8 | 0 |
-| 6 | 5 | 1 | 5 | 8 | **9** |
-
-</details>
-
 ---
 
 > ⬅️ [Back to Home](index.html)

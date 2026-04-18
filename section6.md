@@ -46,12 +46,41 @@ int main() {
 }
 ```
 
-| Expression | Meaning |
-|------------|---------|
-| `x` | The value of `x` |
-| `&x` | The memory **address** of `x` |
-| `p` | The address stored in the pointer (same as `&x`) |
-| `*p` | The value **at** that address (same as `x`) |
+### How the Pointer Looks in Memory
+
+After `int *p = &x;` and before `*p = 20;`, assume the computer stores `x` at address `1000`, and stores the pointer `p` at address `2000`.
+
+<div class="pointer-diagram" role="img" aria-label="Pointer p stores address 1000, which is the address of variable x.">
+  <div class="memory-cell">
+    <div class="memory-address">Address 1000</div>
+    <div class="memory-box">10</div>
+    <div class="memory-name">x</div>
+  </div>
+  <div class="pointer-arrow">
+    <span>p stores this address</span>
+  </div>
+  <div class="memory-cell">
+    <div class="memory-address">Address 2000</div>
+    <div class="memory-box">1000</div>
+    <div class="memory-name">p</div>
+  </div>
+</div>
+
+The value inside `p` is `1000`, so `p` stores the address of `x`.
+
+So:
+
+| Expression | Meaning | Value in this example |
+|------------|---------|-----------------------|
+| `x` | Value stored in `x` | `10` |
+| `&x` | Address of `x` | `1000` |
+| `p` | Value stored in pointer `p` | `1000` |
+| `*p` | Go to address stored in `p` and get the value there | `10` |
+| `&p` | Address of the pointer variable itself | `2000` |
+
+> A pointer is also a variable, so it has its **own address**. The special thing about a pointer is that the value inside it is an **address**.
+>
+> When we write `*p = 20;`, C goes to the address stored inside `p` (`1000`) and changes the value of `x` from `10` to `20`.
 
 ### Printing Pointer Info
 
@@ -102,7 +131,7 @@ for (int i = 0; i < 5; i++) {
 <summary>💡 Hint</summary>
 
 - Declare a pointer to the array: `int *ptr = arr;`
-- Use `*(ptr + i)` to access each element
+- Use `*ptr` to access the current element, then move with `ptr++`
 
 </details>
 
@@ -126,7 +155,8 @@ int main() {
     int *ptr = arr;
     printf("Array elements: ");
     for (int i = 0; i < n; i++) {
-        printf("%d ", *(ptr + i));
+        printf("%d ", *ptr);
+        ptr++;
     }
 
     return 0;
@@ -146,6 +176,7 @@ int main() {
 
 - Traverse the array using pointer arithmetic
 - Sum all elements, then divide by `n` for the average
+- Use `*ptr` to read the current element, then `ptr++` to move to the next element
 - Use `float` or `double` for the average
 
 </details>
@@ -170,7 +201,8 @@ int main() {
     int *ptr = arr;
     int sum = 0;
     for (int i = 0; i < n; i++) {
-        sum += *(ptr + i);
+        sum += *ptr;
+        ptr++;
     }
 
     printf("Sum = %d\n", sum);
@@ -192,7 +224,7 @@ int main() {
 <summary>💡 Hint</summary>
 
 - Create two arrays and two pointers
-- Loop through and assign `*(dest + i) = *(src + i)`
+- Loop through and assign `*ptr2 = *ptr1`, then increment both pointers
 
 </details>
 
@@ -207,21 +239,26 @@ int main() {
     printf("Enter number of elements: ");
     scanf("%d", &n);
 
-    int src[n], dest[n];
+    int arr1[n], arr2[n];
     printf("Enter %d elements: ", n);
+    int *ptr1 = arr1;
+    int *ptr2 = arr2;
+
     for (int i = 0; i < n; i++) {
-        scanf("%d", &src[i]);
+        scanf("%d", ptr1);
+        ptr1++;
     }
 
-    int *pSrc = src;
-    int *pDest = dest;
+    ptr1 = arr1;
     for (int i = 0; i < n; i++) {
-        *(pDest + i) = *(pSrc + i);
+        *ptr2 = *ptr1;
+        ptr1++;
+        ptr2++;
     }
 
     printf("Copied array: ");
     for (int i = 0; i < n; i++) {
-        printf("%d ", dest[i]);
+        printf("%d ", arr2[i]);
     }
 
     return 0;
@@ -258,12 +295,13 @@ void swap(int *a, int *b) {
 }
 
 int main() {
-    int x = 10, y = 20;
-    printf("Before: x = %d, y = %d\n", x, y);
+    int x = 5;
+    int y = 3;
+    printf("before swap: x= %d, y= %d\n", x, y);
 
     swap(&x, &y);
 
-    printf("After:  x = %d, y = %d\n", x, y);
+    printf("after swap: x= %d, y= %d\n", x, y);
     return 0;
 }
 ```
@@ -271,8 +309,8 @@ int main() {
 **Output:**
 
 ```
-Before: x = 10, y = 20
-After:  x = 20, y = 10
+before swap: x= 5, y= 3
+after swap: x= 3, y= 5
 ```
 
 > 💡 This is **call by reference** — the function modifies the original variables because it has their addresses, not copies.
@@ -288,7 +326,7 @@ After:  x = 20, y = 10
 <details markdown="1">
 <summary>💡 Hint</summary>
 
-- Function signature: `void findMinMax(int *arr, int size, int *max, int *min)`
+- Function signature: `void maxAndMin(int arr[], int size, int *max, int *min)`
 - Initialize `*max` and `*min` to the first element
 - Loop through and update using `*max` and `*min`
 
@@ -300,29 +338,25 @@ After:  x = 20, y = 10
 ```c
 #include <stdio.h>
 
-void findMinMax(int *arr, int size, int *max, int *min) {
-    *max = arr[0];
-    *min = arr[0];
-
+void maxAndMin(int arr[], int size, int *max, int *min) {
+    *max = *min = arr[0];
     for (int i = 1; i < size; i++) {
         if (arr[i] > *max) {
             *max = arr[i];
-        }
-        if (arr[i] < *min) {
+        } else if (arr[i] < *min) {
             *min = arr[i];
         }
     }
 }
 
 int main() {
-    int arr[] = {3, 7, 1, 9, 2, 8, 4};
-    int size = 7;
+    int arr[] = {2, 1, 3, 4, 2, 2};
+    int size = sizeof(arr) / sizeof(arr[0]);
     int max, min;
 
-    findMinMax(arr, size, &max, &min);
+    maxAndMin(arr, size, &max, &min);
 
-    printf("Max = %d\n", max);
-    printf("Min = %d\n", min);
+    printf("Max= %d - Min= %d\n", max, min);
 
     return 0;
 }
@@ -331,8 +365,7 @@ int main() {
 **Output:**
 
 ```
-Max = 9
-Min = 1
+Max= 4 - Min= 1
 ```
 
 > 💡 By passing `&max` and `&min`, the function can write results directly into `main`'s variables — no return value needed for multiple outputs.

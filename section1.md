@@ -32,6 +32,8 @@ Before your code runs, it goes through several stages:
 3. **Linker** — Resolves cross references among object files
 4. **Loader** — Copies the executable file into memory and initiates execution
 
+![Program execution process](assets/section1/program-execution-process.png)
+
 ---
 
 ## 2. Program Structure in C
@@ -43,7 +45,7 @@ Every C program follows this basic structure:
 
 int main() {          // Main function, where program starts
     printf("Hello World\n");
-    return 0;         // Returns control to the kernel with code 0
+    return 0;         // Returns with code 0 (meaning the program successfully closed)
 }
 ```
 
@@ -177,6 +179,8 @@ if (condition) {
 }
 ```
 
+![If statement flow](assets/section1/if-statement-flow.png)
+
 ### A Tricky Example
 
 ```c
@@ -209,6 +213,8 @@ if (condition) {
     // body of else
 }
 ```
+
+![If-else statement flow](assets/section1/if-else-flow.png)
 
 ### Nested `if` Statement
 
@@ -442,6 +448,67 @@ int main() {
 - `(float)n1 / n2` — **type casting** forces floating-point division
 - `%%` in `printf` — prints a literal `%` symbol
 - Always check `n2 != 0` before dividing
+
+</details>
+
+
+### Exercise 5: Cartesian Plane Quadrant
+
+**Task:** Accept the x-y coordinates of a point in the Cartesian plane and print a message telling either an axis on which the point lies or the quadrant in which it is found.
+
+![Cartesian plane quadrants](assets/section1/cartesian-plane-quadrants.png)
+
+**Sample outputs:**
+
+```
+(-1.0, -2.5) is in quadrant III
+(0, 4.8) is on the y-axis
+```
+
+<details markdown="1">
+<summary>💡 Hint</summary>
+
+- If both x and y are 0 → origin
+- If x is 0 → y-axis
+- If y is 0 → x-axis
+- Otherwise, check signs to determine the quadrant (I through IV)
+
+</details>
+
+<details markdown="1">
+<summary>🟢 Click to Show Solution</summary>
+
+```c
+#include <stdio.h>
+
+int main() {
+    double x, y;
+    printf("Enter the x coordinate: ");
+    scanf("%lf", &x);
+    printf("Enter the y coordinate: ");
+    scanf("%lf", &y);
+
+    if (x == 0 && y == 0) {
+        printf("(0,0) is at the origin");
+    } else if (x == 0) {
+        printf("(0,%.1f) is on the y-axis", y);
+    } else if (y == 0) {
+        printf("(%.1f,0) is on the x-axis", x);
+    } else if (x > 0 && y > 0) {
+        printf("(%.1f,%.1f) is in quadrant I", x, y);
+    } else if (x < 0 && y > 0) {
+        printf("(%.1f,%.1f) is in quadrant II", x, y);
+    } else if (x < 0 && y < 0) {
+        printf("(%.1f,%.1f) is in quadrant III", x, y);
+    } else if (x > 0 && y < 0) {
+        printf("(%.1f,%.1f) is in quadrant IV", x, y);
+    }
+
+    return 0;
+}
+```
+
+> 💡 **Key idea:** Check the special cases (origin, axes) **before** checking quadrants. Use `%lf` in `scanf` for `double`.
 
 </details>
 

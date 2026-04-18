@@ -92,6 +92,32 @@ int main() {
 
 ---
 
+## 5. Functions with Return Values
+
+Some functions only do an action, like printing. These functions can be `void`.
+
+Other functions calculate a value and send it back to the place where the function was called. These functions use `return`.
+
+```c
+#include <stdio.h>
+
+int square(int x) {
+    return x * x;
+}
+
+int main() {
+    int result = square(5);
+    printf("%d", result);
+    return 0;
+}
+```
+
+Here, `square(5)` returns `25`, and this value is stored in `result`.
+
+> `return` ends the function and sends a value back to the caller.
+
+---
+
 ## 🧪 Exercises — Trace the Output
 
 Practice reading code carefully. Try to predict the output **before** revealing the answer!
