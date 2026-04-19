@@ -136,7 +136,7 @@ printf("I am %d years old.\n", n);
 | 4 | `<` `<=` `>` `>=` | Relational Operators | Left to right |
 | 5 | `==` `!=` | Equality Operators | Left to right |
 | 6 | `&&` | Logical AND | Left to right |
-| 7 | `\|\|` | Logical OR | Left to right |
+| 7 | <code>&#124;&#124;</code> | Logical OR | Left to right |
 
 ### Examples on Precedence
 
