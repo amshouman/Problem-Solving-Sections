@@ -65,59 +65,36 @@ C gives you a small set of helper functions in `<string.h>` for working with str
 | `strcat(dest, src)` | Appends `src` to the end of `dest` |
 | `strcmp(s1, s2)` | Compares two strings (returns `0` if equal) |
 | `strncmp(s1, s2, n)` | Compares the first `n` characters |
-
 ### Reading a String from the User
 
-There are several ways to read a string in C — but **not all of them are safe**. Here are the main options you'll see:
+There are several ways to read a string in C, but they differ in whether they handle spaces and whether they're safe from buffer overflows.
 
 ```c
 #include <stdio.h>
-#include <string.h>
 
 int main() {
     char input[20];
 
-    scanf("%s", input);             // reads a single word (stops at space)
-    fgets(input, 20, stdin);        // reads a whole line, including spaces
+    // scanf("%s", input);        // stops at the first space
+    // scanf("%[^\n]", input);    // reads until '\n', but no size limit
+    // gets(input);               // removed from the C standard — not recommended use
+    fgets(input, 20, stdin);      // ✅ reads a full line, with a size limit
 
-    int len = strlen(input);
-    return 0;
-}
-```
-
-> 💡 With `scanf("%s", ...)`, you do **not** need the `&` because the array name itself already gives the address.
->
-> 💡 Use `fgets` when you want to read a string that might contain **spaces** (like a full name or a sentence).
-
-#### What If You Want to Read a Full Line With Spaces?
-
-You'll see three different methods online — but only **one** of them is safe:
-
-```c
-#include <stdio.h>
-
-int main()
-{
-    char name[20];
-    // scanf("%[^\n]", name);   // not recommended - unsafe
-    // gets(name);              // unsafe
-    fgets(name, 20, stdin);     // ✅ safe — reads "ahmed mohamed\n\0"
-    printf("\n%s\n", name);
-
+    printf("%s\n", input);
     return 0;
 }
 ```
 
 | Method | Reads spaces? | Safe? | Why |
-|--------|---------------|-------|-----|
-| `scanf("%s", ...)` | ❌ no | ⚠️ unsafe | No size limit — can overflow the array |
-| `scanf("%[^\n]", ...)` | ✅ yes | ⚠️ unsafe | Reads everything until `'\n'`, but with **no size limit** — buffer overflow risk |
-| `gets(name)` | ✅ yes | ❌ unsafe | Has **no way** to limit input size. So dangerous it was removed from the C standard |
-| `fgets(name, 20, stdin)` | ✅ yes | ✅ safe | You tell it the **maximum size** (`20`), so it can't overflow |
+|---|---|---|---|
+| `scanf("%s", ...)` | ❌ | ⚠️ | No size limit — can overflow the array |
+| `scanf("%[^\n]", ...)` | ✅ | ⚠️ | Reads until `'\n'`, but no size limit |
+| `gets(name)` | ✅ | ❌ | No way to limit input size; removed from the standard |
+| `fgets(name, 20, stdin)` | ✅ | ✅ | You pass the maximum size, so it can't overflow |
 
-> ⚠️ **Always prefer `fgets`** when reading user input. The size argument is what protects your program from buffer-overflow bugs.
+> 💡 With `scanf("%s", ...)`, you don't need `&` — the array name already decays to its address.
 >
-> 💡 One thing to know: `fgets` keeps the newline `'\n'` at the end of the string when the user hits Enter. So if the user types `ahmed mohamed`, the array actually holds `"ahmed mohamed\n\0"`. If you want to remove that trailing `'\n'`, you'll need to strip it yourself.
+> ⚠️ `fgets` keeps the trailing newline. If the user types `ahmed mohamed` and presses Enter, the buffer holds `"ahmed mohamed\n\0"`. Strip the `'\n'` yourself if you don't want it.
 
 ### Quick Example — `strlen` in Action
 
