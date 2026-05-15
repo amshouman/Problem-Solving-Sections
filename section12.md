@@ -456,4 +456,48 @@ The past tense of 'buy' may have an irregular past tense
 
 ---
 
+### Exercise 6: Split a Sentence Using `strtok`
+
+**Task:** Write a C program that takes a sentence and prints each **word** on its own line using `strtok` (split by spaces).
+
+<details markdown="1">
+<summary>🟢 Click to Show Solution</summary>
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char sentence[] = "Hello world from C";
+    char *token = strtok(sentence, " ");
+
+    while (token != NULL) {
+        printf("%s\n", token);
+        token = strtok(NULL, " ");
+    }
+    return 0;
+}
+```
+
+**Output:**
+
+```
+Hello
+world
+from
+C
+```
+
+**How `strtok` works:**
+- The **first call** uses the string itself: `strtok(sentence, " ")` — it finds the first word.
+- Every **next call** passes `NULL` to continue from where the previous call stopped.
+- The second argument `" "` is the **delimiter** — the character(s) used to split on.
+- `strtok` returns `NULL` when there are no more tokens, which ends the loop.
+
+> ⚠️ `strtok` **modifies** the original string by inserting `'\0'` in place of each delimiter, so don't use it on a string you still need intact.
+
+</details>
+
+---
+
 > ⬅️ [Back to Home](index.html)
