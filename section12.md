@@ -58,13 +58,15 @@ Take the string `"HELLO!"`. Here is exactly how it sits in a `char` array:
 
 C gives you a small set of helper functions in `<string.h>` for working with strings:
 
-| Function | What It Does |
-|----------|--------------|
-| `strlen(s)` | Returns the length of `s` (not counting `'\0'`) |
-| `strcpy(dest, src)` | Copies `src` into `dest` |
-| `strcat(dest, src)` | Appends `src` to the end of `dest` |
-| `strcmp(s1, s2)` | Compares two strings (returns `0` if equal) |
-| `strncmp(s1, s2, n)` | Compares the first `n` characters |
+| Function               | What It Does                                              |
+| ---------------------- | --------------------------------------------------------- |
+| `strlen(s)`            | Returns the length of `s` (not counting `'\0'`)           |
+| `strcpy(dest, src)`    | Copies `src` into `dest`                                  |
+| `strcat(dest, src)`    | Appends `src` to the end of `dest`                        |
+| `strcmp(s1, s2)`       | Compares two strings (returns `0` if equal)               |
+| `strncmp(s1, s2, n)`   | Compares the first `n` characters                         |
+| `strtok(s, delim)`     | Splits `s` into tokens separated by characters in `delim` |
+
 ### Reading a String from the User
 
 There are several ways to read a string in C, but they differ in whether they handle spaces and whether they're safe from buffer overflows.
