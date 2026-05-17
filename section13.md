@@ -458,10 +458,18 @@ Enter the elements of the array: 5 1 4 2 8
 .summary-table pre { background: transparent; border: none; padding: 0; margin: 0; font-family: Consolas, "Courier New", monospace; font-size: 0.6rem; line-height: 1.4; white-space: pre; color: var(--text); overflow: hidden; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
 .summary-table .visual pre { text-align: left; font-size: 0.62rem; }
 .summary-table .when { background: var(--green-muted); font-size: 0.72rem; line-height: 1.4; }
+.summary-table .viz { display: flex; gap: 2px; justify-content: center; align-items: flex-start; font-family: Consolas, "Courier New", monospace; flex-wrap: nowrap; }
+.summary-table .viz .col { display: flex; flex-direction: column; align-items: center; width: 20px; flex: 0 0 20px; }
+.summary-table .viz .cell { width: 18px; height: 20px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; border-radius: 3px; margin-bottom: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+.summary-table .viz .idx { font-size: 0.55rem; color: var(--text-muted); font-weight: 500; }
+.summary-table .viz .arr { font-size: 0.75rem; color: var(--accent); line-height: 1; margin-top: 2px; height: 12px; font-weight: 700; }
+.summary-table .viz .lbl { font-size: 0.55rem; color: var(--text); font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: visible; }
 @media (max-width: 600px) {
   .summary-table pre { font-size: 0.52rem; }
   .summary-table .visual pre { font-size: 0.54rem; }
   .summary-table .purpose, .summary-table .when { font-size: 0.65rem; }
+  .summary-table .viz .cell { width: 14px; height: 16px; font-size: 0.55rem; }
+  .summary-table .viz .idx, .summary-table .viz .lbl { font-size: 0.48rem; }
 }
 </style>
 
@@ -482,29 +490,56 @@ Enter the elements of the array: 5 1 4 2 8
       <td class="purpose">Sort array <code>arr</code></td>
     </tr>
     <tr>
-      <td class="visual"><pre>[5][8][1][3][9][4][0][7]
- 0  1  2  3  4  5  6  7
- ↑
- i</pre></td>
-      <td class="visual"><pre>[1][3][4][5][6][7][8][9]
- 0  1  2  3  4  5  6  7
- ↑        ↑        ↑
- l        m        r</pre></td>
-      <td class="visual"><pre>[2][3][4][1][9]
- 0  1  2  3  4
- ↑        ↑
- i       minI</pre></td>
-      <td class="visual"><pre>[2][3][4][1][9]
- 0  1  2  3  4
- ↑  ↑
- j  j+1</pre></td>
+      <td class="visual">
+        <div class="viz">
+          <div class="col"><div class="cell">5</div><div class="idx">0</div><div class="arr">↑</div><div class="lbl">i</div></div>
+          <div class="col"><div class="cell">8</div><div class="idx">1</div></div>
+          <div class="col"><div class="cell">1</div><div class="idx">2</div></div>
+          <div class="col"><div class="cell">3</div><div class="idx">3</div></div>
+          <div class="col"><div class="cell">9</div><div class="idx">4</div></div>
+          <div class="col"><div class="cell">4</div><div class="idx">5</div></div>
+          <div class="col"><div class="cell">0</div><div class="idx">6</div></div>
+          <div class="col"><div class="cell">7</div><div class="idx">7</div></div>
+        </div>
+      </td>
+      <td class="visual">
+        <div class="viz">
+          <div class="col"><div class="cell">1</div><div class="idx">0</div><div class="arr">↑</div><div class="lbl">l</div></div>
+          <div class="col"><div class="cell">3</div><div class="idx">1</div></div>
+          <div class="col"><div class="cell">4</div><div class="idx">2</div></div>
+          <div class="col"><div class="cell">5</div><div class="idx">3</div><div class="arr">↑</div><div class="lbl">m</div></div>
+          <div class="col"><div class="cell">6</div><div class="idx">4</div></div>
+          <div class="col"><div class="cell">7</div><div class="idx">5</div></div>
+          <div class="col"><div class="cell">8</div><div class="idx">6</div></div>
+          <div class="col"><div class="cell">9</div><div class="idx">7</div><div class="arr">↑</div><div class="lbl">r</div></div>
+        </div>
+      </td>
+      <td class="visual">
+        <div class="viz">
+          <div class="col"><div class="cell">2</div><div class="idx">0</div><div class="arr">↑</div><div class="lbl">i</div></div>
+          <div class="col"><div class="cell">3</div><div class="idx">1</div></div>
+          <div class="col"><div class="cell">4</div><div class="idx">2</div></div>
+          <div class="col"><div class="cell">1</div><div class="idx">3</div><div class="arr">↑</div><div class="lbl">minI</div></div>
+          <div class="col"><div class="cell">9</div><div class="idx">4</div></div>
+        </div>
+      </td>
+      <td class="visual">
+        <div class="viz">
+          <div class="col"><div class="cell">2</div><div class="idx">0</div><div class="arr">↑</div><div class="lbl">j</div></div>
+          <div class="col"><div class="cell">3</div><div class="idx">1</div><div class="arr">↑</div><div class="lbl">j+1</div></div>
+          <div class="col"><div class="cell">4</div><div class="idx">2</div></div>
+          <div class="col"><div class="cell">1</div><div class="idx">3</div></div>
+          <div class="col"><div class="cell">9</div><div class="idx">4</div></div>
+        </div>
+      </td>
     </tr>
     <tr>
       <td><pre>for(int i=0;i&lt;n;i++){
   if(arr[i]==x){
     return i;
   }
-}</pre></td>
+}
+return -1;</pre></td>
       <td><pre>while(l&lt;=r){
   int m=l+(r-l)/2;
   if(arr[m]==x)
