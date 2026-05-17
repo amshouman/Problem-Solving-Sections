@@ -143,13 +143,13 @@ int main() {
 To store many students, declare an array of structs:
 
 ```c
-struct student class[2];        // 2 students
+struct student students[2];        // 2 students
 
-class[0].gpa = 3.9;
-class[0].grade = 'A';
+students[0].gpa = 3.9;
+students[0].grade = 'A';
 
-class[1].gpa = 2.7;
-class[1].grade = 'C';
+students[1].gpa = 2.7;
+students[1].grade = 'C';
 ```
 
 Each element of the array is a complete `struct student` — with all its fields.
